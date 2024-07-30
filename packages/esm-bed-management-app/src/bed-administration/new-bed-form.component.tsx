@@ -9,12 +9,11 @@ import { useLocationsWithAdmissionTag } from '../summary/summary.resource';
 import { type BedAdministrationData } from './bed-administration-types';
 
 interface NewBedFormProps {
-  showModal: boolean;
-  onModalChange: (showModal: boolean) => void;
+  closeModal: () => void;
   mutate: () => any;
 }
 
-const NewBedForm: React.FC<NewBedFormProps> = ({ showModal, onModalChange, mutate }) => {
+const NewBedForm: React.FC<NewBedFormProps> = ({ closeModal, mutate }) => {
   const { t } = useTranslation();
   const { data: admissionLocations } = useLocationsWithAdmissionTag();
   const headerTitle = t('createNewBed', 'Create a new bed');
@@ -61,7 +60,7 @@ const NewBedForm: React.FC<NewBedFormProps> = ({ showModal, onModalChange, mutat
           });
 
           mutate();
-          onModalChange(false);
+          closeModal();
         })
         .catch((error) => {
           showNotification({
@@ -70,20 +69,19 @@ const NewBedForm: React.FC<NewBedFormProps> = ({ showModal, onModalChange, mutat
             critical: true,
             description: error?.message,
           });
-          onModalChange(false);
+          closeModal();
         });
-      onModalChange(false);
+      closeModal();
     },
-    [onModalChange, mutate, t],
+    [closeModal, mutate, t],
   );
 
   return (
     <>
       <BedAdministrationForm
-        onModalChange={onModalChange}
+        closeModal={closeModal}
         allLocations={admissionLocations}
         availableBedTypes={availableBedTypes}
-        showModal={showModal}
         handleCreateQuestion={handleCreateQuestion}
         headerTitle={headerTitle}
         occupancyStatuses={occupancyStatuses}

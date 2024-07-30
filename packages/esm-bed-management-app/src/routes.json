@@ -10,6 +10,12 @@
       "route": "bed-management"
     }
   ],
+  "modals": [
+    {
+      "name": "bed-administration-form-modal",
+      "component": "bedAdministrationFormModal"
+    }
+  ],
   "extensions": [
     {
       "component": "adminCardLink",

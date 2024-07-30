@@ -50,8 +50,7 @@ const BedAdministrationSchema = z.object({
 });
 
 interface BedAdministrationFormProps {
-  showModal: boolean;
-  onModalChange: (showModal: boolean) => void;
+  closeModal: () => void;
   availableBedTypes: Array<BedType>;
   allLocations: Location[];
   handleCreateQuestion?: (formData: BedAdministrationData) => void;
@@ -65,8 +64,7 @@ interface ErrorType {
 }
 
 const BedAdministrationForm: React.FC<BedAdministrationFormProps> = ({
-  showModal,
-  onModalChange,
+  closeModal,
   availableBedTypes,
   allLocations,
   handleCreateQuestion,
@@ -116,8 +114,8 @@ const BedAdministrationForm: React.FC<BedAdministrationFormProps> = ({
   };
 
   return (
-    <ComposedModal open={showModal} onClose={() => onModalChange(false)} preventCloseOnClickOutside>
-      <ModalHeader title={headerTitle} />
+    <React.Fragment>
+      <ModalHeader title={headerTitle} closeModal={closeModal} />
       <Form onSubmit={handleSubmit(onSubmit, onError)}>
         <ModalBody hasScrollingContent>
           <Stack gap={3}>
@@ -277,7 +275,7 @@ const BedAdministrationForm: React.FC<BedAdministrationFormProps> = ({
           </Stack>
         </ModalBody>
         <ModalFooter>
-          <Button onClick={() => onModalChange(false)} kind="secondary">
+          <Button onClick={closeModal} kind="secondary">
             {t('cancel', 'Cancel')}
           </Button>
           <Button disabled={!isDirty} type="submit">
@@ -285,7 +283,7 @@ const BedAdministrationForm: React.FC<BedAdministrationFormProps> = ({
           </Button>
         </ModalFooter>
       </Form>
-    </ComposedModal>
+    </React.Fragment>
   );
 };
 

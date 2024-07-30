@@ -9,13 +9,12 @@ import { type BedAdministrationData } from './bed-administration-types';
 import { useLocationsWithAdmissionTag } from '../summary/summary.resource';
 
 interface EditBedFormProps {
-  showModal: boolean;
-  onModalChange: (showModal: boolean) => void;
+  closeModal: () => void;
   editData: BedFormData;
   mutate: () => any;
 }
 
-const EditBedForm: React.FC<EditBedFormProps> = ({ showModal, onModalChange, editData, mutate }) => {
+const EditBedForm: React.FC<EditBedFormProps> = ({ closeModal, editData, mutate }) => {
   const { t } = useTranslation();
   const { data: admissionLocations } = useLocationsWithAdmissionTag();
 
@@ -54,7 +53,7 @@ const EditBedForm: React.FC<EditBedFormProps> = ({ showModal, onModalChange, edi
           });
 
           mutate();
-          onModalChange(false);
+          closeModal();
         })
         .catch((error) => {
           showNotification({
@@ -63,20 +62,19 @@ const EditBedForm: React.FC<EditBedFormProps> = ({ showModal, onModalChange, edi
             critical: true,
             description: error?.message,
           });
-          onModalChange(false);
+          closeModal();
         });
-      onModalChange(false);
+      closeModal();
     },
-    [onModalChange, mutate, editData, t],
+    [closeModal, mutate, editData, t],
   );
 
   return (
     <>
       <BedAdministrationForm
-        onModalChange={onModalChange}
+        closeModal={closeModal}
         allLocations={admissionLocations}
         availableBedTypes={availableBedTypes}
-        showModal={showModal}
         handleCreateQuestion={handleCreateQuestion}
         headerTitle={headerTitle}
         occupancyStatuses={occupancyStatuses}

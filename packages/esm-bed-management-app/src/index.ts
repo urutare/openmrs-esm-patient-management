@@ -49,3 +49,8 @@ export const bedTagLeftPanelLink = getSyncLifecycle(
   }),
   options,
 );
+
+export const bedAdministrationFormModal = getAsyncLifecycle(
+  () => import('./bed-administration/bed-administration-form.component'),
+  options,
+);
