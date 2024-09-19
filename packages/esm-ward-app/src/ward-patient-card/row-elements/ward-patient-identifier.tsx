@@ -41,12 +41,20 @@ const WardPatientIdentifier: React.FC<WardPatientIdentifierProps> = ({ config: c
   patientIdentifiers.sort(identifierCompareFunction);
   const patientIdentifier = patientIdentifiers[0];
   const labelToDisplay = label != null ? t(label) : patientIdentifier?.identifierType?.name;
-  return (
-    <div>
-      {labelToDisplay ? <Tag>{t('identifierTypelabel', '{{label}}:', { label: labelToDisplay })}</Tag> : <></>}
-      <span>{patientIdentifier?.identifier}</span>
-    </div>
-  );
+  if (labelToDisplay) {
+    return (
+      <div>
+        <Tag>{t('identifierTypelabel', '{{label}}:', { label: labelToDisplay })}</Tag>
+        <span>{patientIdentifier?.identifier}</span>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <Tag>{patientIdentifier?.identifier}</Tag>
+      </div>
+    );
+  }
 };
 
 export default WardPatientIdentifier;
