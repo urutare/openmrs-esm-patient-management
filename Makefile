@@ -1,5 +1,5 @@
-COMPOSE_FILE = docker-compose.yaml
-COMPOSE_FILE_PROD = docker-compose.prod.yaml
+COMPOSE_FILE = docker-compose.dev.yaml
+COMPOSE_FILE_PROD = docker-compose.yaml
 APP = app
 DATABASE_NAME = postgres_db 
 

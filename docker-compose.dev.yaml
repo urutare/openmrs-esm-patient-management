@@ -1,19 +1,23 @@
+version: '3.8'
+
 services:
   frontend:
     build:
       context: .
       dockerfile: Dockerfile
-      target: prod
+      target: builder # Stop at builder stage for development
+    command: yarn start
     ports:
-      - "2080:3000"
-      - "2081:80"
-    restart: on-failure
+      - "8080:3000"
     env_file:
       - .env
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - OPENMRS_BACKEND_URL=http://openmrs-backend:8080/openmrs
       - OPENMRS_PUBLIC_PATH=/openmrs/spa
+    volumes:
+      - .:/app
+      - /app/node_modules
     networks:
       - openmrs-network
 
