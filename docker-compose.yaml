@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  openmrs_frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openmrs_frontend
+    ports:
+      - "8080:8080"
+      # - "8081:8081"
+      # - "8083:8083"
+      # - "8085:8085"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+    volumes:
+      - .:/usr/src/app:delegated        # Mount the entire project, delegated for performance
+    #   - /usr/src/app/.yarn/cache        # Keep Yarn's cache in a volume so it isn't overwritten
+    #   - /usr/src/app/.pnp.cjs           # Mount Yarn PnP config file to prevent issues
+    command: yarn start --sources 'packages/esm-*-app/'
+    # command: yarn start --sources 'packages/esm-active-visits-app/'
+    networks:
+      - openmrs-network
+
+networks:
+  openmrs-network:
+    driver: bridge
